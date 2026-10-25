@@ -1,0 +1,17 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net8.0</TargetFramework>
+    <RollForward>Major</RollForward>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <EnableDefaultCompileItems>false</EnableDefaultCompileItems>
+    <AssemblyName>ScamWYF.BetterBrowse.Tests</AssemblyName>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Program.cs" />
+    <!-- The real sources, not copies: a failing URL rule fails the test that covers it. -->
+    <Compile Include="../../src/SearchProviders.cs" Link="SearchProviders.cs" />
+    <Compile Include="../../src/SearchEngines.cs" Link="SearchEngines.cs" />
+  </ItemGroup>
+</Project>

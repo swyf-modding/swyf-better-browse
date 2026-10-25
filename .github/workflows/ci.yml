@@ -1,0 +1,53 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  engines:
+    name: URL rules
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: 8.0.x
+
+      # Pure BCL: no game, no Unity, no BepInEx. The test project compiles the real
+      # src/SearchEngines.cs rather than a copy.
+      - name: Run engine URL tests
+        run: dotnet run --project tests/engines/Engines.csproj -c Release
+
+  tree:
+    name: Scripts and tree
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Parse every PowerShell script
+        shell: pwsh
+        run: |
+          $failed = $false
+          Get-ChildItem -Recurse -Filter *.ps1 | ForEach-Object {
+            $tokens = $null
+            $errors = $null
+            [System.Management.Automation.Language.Parser]::ParseFile(
+              $_.FullName, [ref]$tokens, [ref]$errors) | Out-Null
+            if ($errors.Count -gt 0) {
+              $failed = $true
+              $errors | ForEach-Object { Write-Error ("{0}: {1}" -f $_.Extent.File, $_.Message) }
+            }
+          }
+          if ($failed) { exit 1 }
+
+      - name: No binary artefacts committed
+        shell: bash
+        run: |
+          files=$(git ls-files '*.dll' '*.pdb' '*.exe' '*.mdb')
+          if [ -n "$files" ]; then
+            echo "These do not belong in the repository:"
+            echo "$files"
+            exit 1
+          fi

@@ -1,0 +1,12 @@
+bin/
+obj/
+vendor/ScamWYF.Modding.Core/bin/
+vendor/ScamWYF.Modding.Core/obj/
+vendor/ScamWYF.Modding.Core/tests/*/bin/
+vendor/ScamWYF.Modding.Core/tests/*/obj/
+*.user
+*.suo
+
+# Release artefacts
+*.zip
+release-check/
