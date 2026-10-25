@@ -64,15 +64,17 @@ Friends.
 
 ## Installation
 
-### Switchboard
+### Switchboard / ModCatalogue
 
-Open Switchboard's **Get mods** tab, find **Better Browse**, and install it. The catalogue entries
-route the two files correctly:
+The release is packaged for Switchboard's **Get mods** tab: a non-prerelease GitHub release with a
+zip at the top level. Once the catalogue entry is merged, Switchboard installs it and routes:
 
 | File | Goes to |
 |---|---|
 | `ScamWYF.BetterBrowse.dll` | `BepInEx/plugins` |
 | `ScamWYF.Modding.Core.dll` | `BepInEx/core` |
+
+Until then, install from the zip by hand using the steps below.
 
 ### By hand
 
